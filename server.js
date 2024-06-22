@@ -1,6 +1,9 @@
 const express = require('express');
+const cors = require('cors')
 const app = express();
 const port = 3000;
+
+app.use(cors({origin:true,credentials: true}));
 
 // Sample database or object storing video and image target URLs by ID
 const mediaDatabase = {
@@ -31,6 +34,6 @@ app.get('/getMedia', (req, res) => {
 app.use(express.static('public'));
 
 // Start server
-app.listen(port, "0.0.0.0" , () => {
+app.listen(process.env.PORT || port,() => {
   console.log(`Server running at http://localhost:${port}`);
 });
