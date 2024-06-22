@@ -8,7 +8,7 @@ const port = 3000;
 // Sample database or object storing video and image target URLs by ID
 const mediaDatabase = {
   '1': {
-    videoSrc: 'https://res.cloudinary.com/dqdtdhr16/video/upload/v1718889988/memo-ar-vid_zycp6q.mp4',
+    videoSrc: 'https://res.cloudinary.com/dqdtdhr16/video/upload/v1719074388/video_uwk7hn.mp4',
     imageTargetSrc: 'https://cdn.glitch.global/ebad8ce1-2c18-42b4-93b9-42b1a1820093/dino.mind?v=1719058710553'
   },
   '2': {
