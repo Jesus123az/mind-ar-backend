@@ -9,11 +9,11 @@ const port = 3000;
 const mediaDatabase = {
   '1': {
     videoSrc: 'https://res.cloudinary.com/dqdtdhr16/video/upload/v1718889988/memo-ar-vid_zycp6q.mp4',
-    imageTargetSrc: 'https://cdn.glitch.global/ebad8ce1-2c18-42b4-93b9-42b1a1820093/targets.mind?v=1719055778456'
+    imageTargetSrc: 'https://cdn.glitch.global/ebad8ce1-2c18-42b4-93b9-42b1a1820093/dino.mind?v=1719058710553'
   },
   '2': {
     videoSrc: 'https://res.cloudinary.com/dqdtdhr16/video/upload/v1718889988/another-video.mp4',
-    imageTargetSrc: 'https://cdn.glitch.global/ebad8ce1-2c18-42b4-93b9-42b1a1820093/another-target.mind'
+    imageTargetSrc: 'https://cdn.glitch.global/ebad8ce1-2c18-42b4-93b9-42b1a1820093/kid.mind?v=1719058695406'
   }
   // Add more entries as needed
 };
