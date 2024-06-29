@@ -1,13 +1,13 @@
+// server.js
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import { OfflineCompiler } from './utils/image-target/offline-compiler.js';
-import { loadImage } from 'canvas';
+import { fork } from 'child_process';
 import multer from 'multer';
-import fs from 'fs'
 import { promises as fsPromises } from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
-const { writeFile } = fsPromises;
+const { unlink } = fsPromises;
 
 const app = express();
 const port = 3000;
@@ -47,45 +47,49 @@ app.get('/ar-app', (req, res) => {
 });
 
 // Process image upload
-// Process image upload
-app.post('/process-image', upload.single('image'), async (req, res) => {
+app.post('/process-image', upload.single('image'), (req, res) => {
   try {
     const imageFile = req.file;
-    
+
     if (!imageFile) {
       return res.status(400).json({ error: 'No image uploaded' });
     }
 
     const imagePath = imageFile.path;
-    const images = await Promise.all([loadImage(imagePath)]); // loadImage expects an array
 
-    const compiler = new OfflineCompiler();
-    await compiler.compileImageTargets(images, console.log);
-    const buffer = compiler.exportData();
-    
-    // Writing the generated file to disk
-    await writeFile('targets.mind', buffer);
+    // Fork a new process for processing the image
+    const child = fork('./workers/fileProcessor.js');
 
-    // Sending the file as response
-    res.download('targets.mind', 'targets.mind', (err) => {
-      if (err) {
-        console.error('Error sending file:', err);
-        res.status(500).send('Error sending file'); // Send error message if download fails
-      } else {
-        // Optionally, you can delete the temporary file after sending
-        fsPromises.unlink(imagePath, (err) => {
-          if (err) {
-            console.error('Error deleting file:', err);
-          }
-        });
+    // Listen for messages from the child process
+    child.on('message', async (message) => {
+      if (message.error) {
+        console.error('Error processing image:', message.error);
+        return res.status(500).send('Error processing image');
       }
+
+      const outputFilename = message.outputFilename;
+
+      // Send the file as response
+      res.download(outputFilename, 'targets.mind', async (err) => {
+        if (err) {
+          console.error('Error sending file:', err);
+          res.status(500).send('Error sending file');
+        } else {
+          // Clean up the generated mind file
+          await unlink(outputFilename).catch((err) => {
+            console.error('Error deleting file:', err);
+          });
+        }
+      });
     });
+
+    // Send the image path to the child process for processing
+    child.send({ imagePath });
   } catch (err) {
     console.error('Error processing image:', err);
     res.status(500).send('Error processing image');
   }
 });
-
 
 // Start server
 app.listen(port, () => {
