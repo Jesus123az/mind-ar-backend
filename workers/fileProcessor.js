@@ -1,19 +1,18 @@
-// fileProcessor.js
 import { loadImage } from 'canvas';
 import { promises as fsPromises } from 'fs';
 import { OfflineCompiler } from '../utils/image-target/offline-compiler.js';
 
 const { writeFile, unlink } = fsPromises;
 
-async function processImage(imagePath) {
+async function processImage(imagePath, uniqueId) {
     try {
         const images = await Promise.all([loadImage(imagePath)]);
         const compiler = new OfflineCompiler();
         await compiler.compileImageTargets(images, console.log);
         const buffer = compiler.exportData();
 
-        // Use a unique filename for the generated file
-        const outputFilename = `${imagePath}.mind`;
+        // Use the unique ID for the generated file
+        const outputFilename = `public/${uniqueId}.mind`;
         await writeFile(outputFilename, buffer);
 
         // Clean up the uploaded image file
@@ -29,6 +28,6 @@ async function processImage(imagePath) {
 
 // Listen for messages from the parent process
 process.on('message', async (message) => {
-    const { imagePath } = message;
-    await processImage(imagePath);
+    const { imagePath, uniqueId } = message;
+    await processImage(imagePath, uniqueId);
 });
