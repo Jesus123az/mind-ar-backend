@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 const { unlink } = fsPromises;
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // Configure multer for file uploads
 const upload = multer({ dest: 'uploads/' });
