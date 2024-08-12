@@ -63,7 +63,7 @@ app.get('/ar-app', async(req, res) => {
 app.post('/process-image/:id', upload.single('image'), (req, res) => {
   try {
     const imageFile = req.file;
-    const uniqueId = req.params.id; // Get unique ID from params
+    const uniqueId = req.params.id;
 
     if (!imageFile) {
       return res.status(400).json({ error: 'No image uploaded' });
@@ -71,31 +71,24 @@ app.post('/process-image/:id', upload.single('image'), (req, res) => {
 
     const imagePath = imageFile.path;
 
-    // Fork a new process for processing the image
     const child = fork('./workers/fileProcessor.js');
 
-    // Listen for messages from the child process
     child.on('message', async (message) => {
       if (message.error) {
         console.error('Error processing image:', message.error);
         return res.status(500).send('Error processing image');
       }
 
-      const outputFilename = message.outputFilename;
-
-      // Send success response
       res.json({
         message: 'Image processed successfully',
-        fileUrl: `${req.protocol}://${req.get('host')}/${uniqueId}.mind` // Provide URL to access the file
+        fileUrl: `${req.protocol}://${req.get('host')}/${uniqueId}.mind`,
       });
 
-      // Clean up the uploaded image file
       await unlink(imagePath).catch((err) => {
         console.error('Error deleting file:', err);
       });
     });
 
-    // Send the image path and unique ID to the child process for processing
     child.send({ imagePath, uniqueId });
   } catch (err) {
     console.error('Error processing image:', err);
@@ -103,7 +96,8 @@ app.post('/process-image/:id', upload.single('image'), (req, res) => {
   }
 });
 
+
 // Start server
-app.listen(port, () => {
+app.listen( port,"0.0.0.0", () => {
   console.log(`Server running at http://localhost:${port}`);
 });
