@@ -10,7 +10,6 @@ import mongoose from 'mongoose';
 import 'dotenv/config'
 import User from './models/user.js';
 import HealthInfo from './models/healthInfo.js';
-import User from './models/user.js';
 
 const { unlink } = fsPromises;
 
