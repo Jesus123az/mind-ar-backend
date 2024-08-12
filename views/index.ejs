@@ -1,37 +1,69 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-    <style>
-      .loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="loading">Loading...</div>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <style>
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+    }
+    a-text {
+      color: #fff;
+      font-family: Arial, sans-serif;
+      align: center;
+      width: 2;
+    }
+    a-image {
+      width: 1.5;
+      height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="loading">Loading...</div>
 
-    <a-scene id="scene" mindar-image="imageTargetSrc: /<%= userId %>.mind" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-image src="<%= profileImage %>"> </a-image>
-        <a-text value="<%= legalName %>"></a-text>
+  <a-scene id="scene" mindar-image="imageTargetSrc: /<%= userId %>.mind" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    
+    <a-entity mindar-image-target="targetIndex: 0" position="0 0 0">
       
-      </a-entity>
-    </a-scene>
+      <!-- Profile Image -->
+      <a-image src="<%= profileImage %>" position="0 0.7 0" width="2" height="2"></a-image>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        // Hide loading indicator
-        document.querySelector('.loading').style.display = 'none';
-        document.querySelector('#scene').setAttribute('visible', 'true');
-      });
-    </script>
-  </body>
+      <!-- Legal Name and Age -->
+      <a-entity position="0 -1 0">
+        <a-text value="Name: <%= legalName %>" color="#FFD700" position="0 0.2 0" align="center" scale="2 2 2"></a-text>
+        <a-text value="Age: <%= age %>" color="#FFD700" position="0 -0.1 0" align="center" scale="2 2 2"></a-text>
+      </a-entity>
+
+      <!-- Medical Info -->
+      <a-entity position="0 -2 0">
+        <a-text value="Blood Type: <%= bloodType %>" color="#FF6347" position="0 0.4 0" align="center" scale="1.5 1.5 1.5"></a-text>
+        <a-text value="Medical Conditions: <%= harmfulMedicalConditions.map(c => c.name).join(', ') %>" color="#FF6347" position="0 0.1 0" align="center" scale="1.5 1.5 1.5"></a-text>
+        <a-text value="Medications: <%= harmfulMedications.map(m => m.name).join(', ') %>" color="#FF6347" position="0 -0.2 0" align="center" scale="1.5 1.5 1.5"></a-text>
+        <a-text value="Allergies: <%= allergies.map(a => a.name).join(', ') %>" color="#FF6347" position="0 -0.5 0" align="center" scale="1.5 1.5 1.5"></a-text>
+      </a-entity>
+
+      <!-- Emergency and Doctor Contacts -->
+      <a-entity position="0 -3 0">
+        <a-text value="Emergency Contact: <%= emergencyContacts[0].name %> - <%= emergencyContacts[0].number %>" color="#87CEEB" position="0 0.3 0" align="center" scale="1.5 1.5 1.5"></a-text>
+        <a-text value="Doctor Contact: <%= doctorContacts[0].name %> - <%= doctorContacts[0].number %>" color="#87CEEB" position="0 0 0" align="center" scale="1.5 1.5 1.5"></a-text>
+      </a-entity>
+
+    </a-entity>
+  </a-scene>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Hide loading indicator
+      document.querySelector('.loading').style.display = 'none';
+      document.querySelector('#scene').setAttribute('visible', 'true');
+    });
+  </script>
+</body>
 </html>
