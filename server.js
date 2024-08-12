@@ -10,6 +10,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config'
 import User from './models/user.js';
 import HealthInfo from './models/healthInfo.js';
+import User from './models/user.js';
 
 const { unlink } = fsPromises;
 
@@ -84,7 +85,7 @@ app.post('/process-image/:id', upload.single('image'), (req, res) => {
         message: 'Image processed successfully',
         fileUrl: `${req.protocol}://${req.get('host')}/${uniqueId}.mind`,
       });
-
+      await User.findByIdAndUpdate(uniqueId, {qrCodeGenerated: true})
       await unlink(imagePath).catch((err) => {
         console.error('Error deleting file:', err);
       });
