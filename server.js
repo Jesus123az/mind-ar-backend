@@ -48,12 +48,12 @@ app.set('views', path.join(path.dirname(new URL(import.meta.url).pathname), 'vie
 app.get('/ar-app', async(req, res) => {
   const id = req.query.id;
   const user = await User.findById(id);
-  if(!user.healthInfo){
+  if(user.healthInfo === null){
       res.status(404).send('Media not found');
   }
   const healthInfo = await HealthInfo.findById(user.healthInfo)
   if (healthInfo) {
-    res.render('index', healthInfo);
+    res.render('index', {userId: user._id, ...healthInfo});
   } else {
     res.status(404).send('Media not found');
   }
