@@ -61,7 +61,7 @@ app.get('/ar-app', async(req, res) => {
 });
 
 // Process image upload
-app.post('/process-image/:id', upload.single('image'), (req, res) => {
+app.post('/process-image/:id', upload.single('image'), async (req, res) => {
   try {
     const imageFile = req.file;
     const uniqueId = req.params.id;
