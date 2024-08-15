@@ -80,11 +80,11 @@ app.post('/process-image/:id', upload.single('image'), (req, res) => {
         return res.status(500).send('Error processing image');
       }
 
+      await User.findByIdAndUpdate(uniqueId, {qrCodeGenerated: true})
       res.json({
         message: 'Image processed successfully',
         fileUrl: `${req.protocol}://${req.get('host')}/${uniqueId}.mind`,
       });
-      await User.findByIdAndUpdate(uniqueId, {qrCodeGenerated: true})
       await unlink(imagePath).catch((err) => {
         console.error('Error deleting file:', err);
       });
