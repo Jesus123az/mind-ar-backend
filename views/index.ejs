@@ -12,21 +12,16 @@
       transform: translate(-50%, -50%);
       font-size: 20px;
     }
+    a-text {
+      color: #fff;
+      font-family: Arial, sans-serif;
+      align: center;
+      width: 2;
+    }
     a-image {
       width: 1.5;
       height: 1.5;
     }
-      a-text {
-        color: #000;
-        font-family: Arial, sans-serif;
-        width: 2;
-      }
-      .box {
-        color: #D3D3D3;
-        opacity: 0.8;
-        width: 2.5;
-        height: 1;
-      }
   </style>
 </head>
 <body>
@@ -35,51 +30,48 @@
   <a-scene id="scene" mindar-image="imageTargetSrc: /<%= userId %>.mind" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
     
-    <a-entity mindar-image-target="targetIndex: 0" position="0 0 0">
-      
-      <!-- Profile Section (Center) -->
-      <a-entity position="0 0 0">
-        <a-image src="<%= profileImage %>" position="0 0.5 0" width="1.5" height="1.5"></a-image>
-        <a-text value="<%= legalName %>" position="0 -1.2 0.1" align="center"></a-text>
-        <a-text value="Age: <%= age %>" position="0 -1.5 0.1" align="center"></a-text>
-        <a-text value="Blood Type: <%= bloodType %>" color="#FF0000" position="0 -1.8 0.1" align="center"></a-text>
-      </a-entity>
+   <!-- Profile Section (Center) -->
+   <a-entity position="0 0 0">
+    <a-image src="<%= profileImage %>" position="0 0.5 0" width="1.5" height="1.5"></a-image>
+    <a-text value="<%= legalName %>" position="0 -1.2 0.1" align="center"></a-text>
+    <a-text value="Age: <%= age %>" position="0 -1.5 0.1" align="center"></a-text>
+    <a-text value="Blood Type: <%= bloodType %>" color="#FF0000" position="0 -1.8 0.1" align="center"></a-text>
+  </a-entity>
 
-      <!-- High Risk Section (Left) -->
-      <a-entity position="-3 0 0">
-        <a-box class="box" position="0 0 -0.1"></a-box>
-        <a-text value="High Risk" color="#FF0000" position="0 0.4 0.1" align="center"></a-text>
-        <a-text value="Conditions: <%= harmfulMedicalConditions.map(c => c.name).join(', ') %>" position="0 0.1 0.1" align="center"></a-text>
-        <a-text value="Medications: <%= harmfulMedications.map(m => m.name).join(', ') %>" position="0 -0.2 0.1" align="center"></a-text>
-      </a-entity>
+  <!-- High Risk Section (Left) -->
+  <a-entity position="-3 0 0">
+    <a-box class="box" position="0 0 -0.1"></a-box>
+    <a-text value="High Risk" color="#FF0000" position="0 0.4 0.1" align="center"></a-text>
+    <a-text value="Conditions: <%= harmfulMedicalConditions.map(c => c.name).join(', ') %>" position="0 0.1 0.1" align="center"></a-text>
+    <a-text value="Medications: <%= harmfulMedications.map(m => m.name).join(', ') %>" position="0 -0.2 0.1" align="center"></a-text>
+  </a-entity>
 
-      <!-- Allergies Section (Top) -->
-      <a-entity position="0 2 0">
-        <a-box class="box" position="0 0 -0.1"></a-box>
-        <a-text value="Allergies" color="#FF0000" position="0 0.3 0.1" align="center"></a-text>
-        <a-text value="<%= allergies.map(a => a.name).join(', ') %>" position="0 -0.1 0.1" align="center"></a-text>
-      </a-entity>
+  <!-- Allergies Section (Top) -->
+  <a-entity position="0 2 0">
+    <a-box class="box" position="0 0 -0.1"></a-box>
+    <a-text value="Allergies" color="#FF0000" position="0 0.3 0.1" align="center"></a-text>
+    <a-text value="<%= allergies.map(a => a.name).join(', ') %>" position="0 -0.1 0.1" align="center"></a-text>
+  </a-entity>
 
-      <!-- Emergency Contact Section (Right) -->
-      <a-entity position="3 1 0">
-        <a-box class="box" position="0 0 -0.1"></a-box>
-        <a-text value="Emergency Contact" position="0 0.4 0.1" align="center"></a-text>
-        <% emergencyContacts.forEach((contact, index) => { %>
-          <a-text value="<%= contact.name %>" position="0 <%= 0.1 - (index * 0.3) %> 0.1" align="center"></a-text>
-          <a-text value="<%= contact.number %>" color="#87CEEB" position="0 <%= -0.1 - (index * 0.3) %> 0.1" align="center"></a-text>
-        <% }); %>
-      </a-entity>
+  <!-- Emergency Contact Section (Right) -->
+  <a-entity position="3 1 0">
+    <a-box class="box" position="0 0 -0.1"></a-box>
+    <a-text value="Emergency Contact" position="0 0.4 0.1" align="center"></a-text>
+    <% emergencyContacts.forEach((contact, index) => { %>
+      <a-text value="<%= contact.name %>" position="0 <%= 0.1 - (index * 0.3) %> 0.1" align="center"></a-text>
+      <a-text value="<%= contact.number %>" color="#87CEEB" position="0 <%= -0.1 - (index * 0.3) %> 0.1" align="center"></a-text>
+    <% }); %>
+  </a-entity>
 
-      <!-- Doctor Contact Section (Right-Bottom) -->
-      <a-entity position="3 -2 0">
-        <a-box class="box" position="0 0 -0.1"></a-box>
-        <a-text value="Doctors Contact" position="0 0.4 0.1" align="center"></a-text>
-        <% doctorContacts.forEach((contact, index) => { %>
-          <a-text value="<%= contact.name %>" position="0 <%= 0.1 - (index * 0.3) %> 0.1" align="center"></a-text>
-          <a-text value="<%= contact.number %>" color="#87CEEB" position="0 <%= -0.1 - (index * 0.3) %> 0.1" align="center"></a-text>
-        <% }); %>
-      </a-entity>
-
+  <!-- Doctor Contact Section (Right-Bottom) -->
+  <a-entity position="3 -2 0">
+    <a-box class="box" position="0 0 -0.1"></a-box>
+    <a-text value="Doctors Contact" position="0 0.4 0.1" align="center"></a-text>
+    <% doctorContacts.forEach((contact, index) => { %>
+      <a-text value="<%= contact.name %>" position="0 <%= 0.1 - (index * 0.3) %> 0.1" align="center"></a-text>
+      <a-text value="<%= contact.number %>" color="#87CEEB" position="0 <%= -0.1 - (index * 0.3) %> 0.1" align="center"></a-text>
+    <% }); %>
+  </a-entity>
     </a-entity>
   </a-scene>
 
