@@ -32,27 +32,48 @@
     
     <a-entity mindar-image-target="targetIndex: 0" position="0 0 0">
       
-      <!-- Profile Image -->
-      <a-image src="<%= profileImage %>" position="0 0.7 0" width="2" height="2"></a-image>
-
-      <!-- Legal Name and Age -->
-      <a-entity position="0 -1 0">
-        <a-text value="Name: <%= legalName %>" color="#FFD700" position="0 0.2 0" align="center" scale="2 2 2"></a-text>
-        <a-text value="Age: <%= age %>" color="#FFD700" position="0 -0.1 0" align="center" scale="2 2 2"></a-text>
+      <a-entity position="0 0 0">
+        <a-image src="<%= profileImage %>" position="0 0.5 0" width="1.5" height="1.5"></a-image>
+        <a-text value="<%= legalName %>" color="#000" position="0 -1.2 0" align="center"></a-text>
+        <a-text value="<%= age %>" color="#000" position="0 -1.5 0" align="center"></a-text>
+        <a-text value="Blood Type: <%= bloodType %>" color="#FF0000" position="0 -1.8 0" align="center"></a-text>
       </a-entity>
-
-      <!-- Medical Info -->
-      <a-entity position="0 -2 0">
-        <a-text value="Blood Type: <%= bloodType %>" color="#FF6347" position="0 0.4 0" align="center" scale="1.5 1.5 1.5"></a-text>
-        <a-text value="Medical Conditions: <%= harmfulMedicalConditions.map(c => c.name).join(', ') %>" color="#FF6347" position="0 0.1 0" align="center" scale="1.5 1.5 1.5"></a-text>
-        <a-text value="Medications: <%= harmfulMedications.map(m => m.name).join(', ') %>" color="#FF6347" position="0 -0.2 0" align="center" scale="1.5 1.5 1.5"></a-text>
-        <a-text value="Allergies: <%= allergies.map(a => a.name).join(', ') %>" color="#FF6347" position="0 -0.5 0" align="center" scale="1.5 1.5 1.5"></a-text>
+  
+      <!-- High Risk Section (Left) -->
+      <a-entity position="-3 0 0">
+        <a-box position="0 0 0" depth="0.01" height="2" width="2.5" class="box-background"></a-box>
+        <a-text value="High Risk" color="#FF0000" position="0 0.9 0" align="center" scale="2 2 2"></a-text>
+        <a-text value="Conditions" color="#FF0000" position="-1 0.4 0" align="left"></a-text>
+        <a-text value="<%= harmfulMedicalConditions.map(c => c.name).join(', ') %>" color="#000" position="-1 0.2 0" align="left"></a-text>
+        <a-text value="Medications" color="#FF0000" position="-1 -0.3 0" align="left"></a-text>
+        <a-text value="<%= harmfulMedications.map(m => m.name).join(', ') %>" color="#000" position="-1 -0.5 0" align="left"></a-text>
       </a-entity>
-
-      <!-- Emergency and Doctor Contacts -->
-      <a-entity position="0 -3 0">
-        <a-text value="Emergency Contact: <%= emergencyContacts[0].name %> - <%= emergencyContacts[0].number %>" color="#87CEEB" position="0 0.3 0" align="center" scale="1.5 1.5 1.5"></a-text>
-        <a-text value="Doctor Contact: <%= doctorContacts[0].name %> - <%= doctorContacts[0].number %>" color="#87CEEB" position="0 0 0" align="center" scale="1.5 1.5 1.5"></a-text>
+  
+      <!-- Allergies Section (Top) -->
+      <a-entity position="0 2 0">
+        <a-box position="0 0 0" depth="0.01" height="1" width="2.5" class="box-background"></a-box>
+        <a-text value="Allergies" color="#FF0000" position="0 0.3 0" align="center" scale="2 2 2"></a-text>
+        <a-text value="<%= allergies.map(a => a.name).join(', ') %>" color="#000" position="0 -0.1 0" align="center"></a-text>
+      </a-entity>
+  
+      <!-- Emergency Contact Section (Right) -->
+      <a-entity position="3 1 0">
+        <a-box position="0 0 0" depth="0.01" height="2" width="2.5" class="box-background"></a-box>
+        <a-text value="Emergency Contact" color="#000" position="0 0.8 0" align="center" scale="1.5 1.5 1.5"></a-text>
+        <% emergencyContacts.forEach((contact, index) => { %>
+          <a-text value="<%= contact.name %>" color="#000" position="0 <%= 0.4 - (index * 0.3) %> 0" align="center"></a-text>
+          <a-text value="<%= contact.number %>" color="#87CEEB" position="0 <%= 0.2 - (index * 0.3) %> 0" align="center"></a-text>
+        <% }); %>
+      </a-entity>
+  
+      <!-- Doctor Contact Section (Right-Bottom) -->
+      <a-entity position="3 -2 0">
+        <a-box position="0 0 0" depth="0.01" height="2" width="2.5" class="box-background"></a-box>
+        <a-text value="Doctors Contact" color="#000" position="0 0.8 0" align="center" scale="1.5 1.5 1.5"></a-text>
+        <% doctorContacts.forEach((contact, index) => { %>
+          <a-text value="<%= contact.name %>" color="#000" position="0 <%= 0.4 - (index * 0.3) %> 0" align="center"></a-text>
+          <a-text value="<%= contact.number %>" color="#87CEEB" position="0 <%= 0.2 - (index * 0.3) %> 0" align="center"></a-text>
+        <% }); %>
       </a-entity>
 
     </a-entity>
