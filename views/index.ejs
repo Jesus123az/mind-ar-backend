@@ -75,7 +75,7 @@
           <% harmfulMedicalConditions.forEach(function(condition, index) { %>
             <a-text value="<%= condition.name %>" color="#333" align="center" position="0 <%= -0.25 - index * 0.25 %> 0.1"></a-text>
           <% }); %>
-          <a-text value="Medications" color="#333" align="center" position="0 <%= -0.25 - (index * 0.25) * 0.25 %> 0.1"></a-text>
+          <a-text value="Medications" color="#333" align="center" position="0 <%= -0.5 - (harmfulMedicalConditions.length * 0.25) %> 0.1"></a-text>
           <% harmfulMedications.forEach(function(medication, index) { %>
             <a-text value="<%= medication.name %>" color="#333" align="center" position="0 <%= -0.25 - (harmfulMedicalConditions.length * 0.25) - (index * 0.25)  %> 0.1"></a-text>
           <% }); %>
