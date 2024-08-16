@@ -83,7 +83,7 @@
       </a-entity>
 
       <a-entity position="2 -2.5 0">
-        <a-plane width="2" height="<%= emergencyContacts.length%>" color="#ffffff"></a-plane>
+        <a-plane width="3" height="<%= emergencyContacts.length%>" color="#ffffff"></a-plane>
         <a-entity class="text-box">
           <a-text value="Emergency Contacts" color="#ff0000" align="center" position="0 0.3 0.1"></a-text>
           <% emergencyContacts.forEach(function(contact, index) { %>
@@ -93,7 +93,7 @@
       </a-entity>
 
       <a-entity position="2 0 0">
-        <a-plane width="2" height="<%= doctorContacts.length %>" color="#ffffff"></a-plane>
+        <a-plane width="3" height="<%= doctorContacts.length %>" color="#ffffff"></a-plane>
         <a-entity class="text-box">
           <a-text value="Doctor Contacts" color="#ff0000" align="center" position="0 0.3 0.1"></a-text>
           <% doctorContacts.forEach(function(contact, index) { %>
