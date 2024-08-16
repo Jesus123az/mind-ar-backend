@@ -68,7 +68,7 @@
       </a-entity>
 
       <a-entity position="-2.5 0 0">
-        <a-plane width="2" height="<%= harmfulMedicalConditions.length + harmfulMedications.length %>" color="#ffffff"></a-plane>
+        <a-plane width="2" height="<%= harmfulMedicalConditions.length + harmfulMedications.length + 0.5%>" color="#ffffff"></a-plane>
         <a-entity class="text-box">
           <a-text value="High Risk" color="#ff0000" align="center" position="0 0.3 0"></a-text>
           <a-text value="Conditions" color="#333" align="center" position="0 0 0"></a-text>
@@ -77,7 +77,7 @@
           <% }); %>
           <a-text value="Medications" color="#333" align="center" position="0 <%= -0.5 - (harmfulMedicalConditions.length * 0.25) %> 0.1"></a-text>
           <% harmfulMedications.forEach(function(medication, index) { %>
-            <a-text value="<%= medication.name %>" color="#333" align="center" position="0 <%= -0.25 - (harmfulMedicalConditions.length * 0.25) - (index * 0.25)  %> 0.1"></a-text>
+            <a-text value="<%= medication.name %>" color="#333" align="center" position="0 <%= -0.75 - (harmfulMedicalConditions.length * 0.25) - (index * 0.25)  %> 0.1"></a-text>
           <% }); %>
         </a-entity>
       </a-entity>
@@ -97,7 +97,7 @@
         <a-entity class="text-box">
           <a-text value="Doctor Contacts" color="#ff0000" align="center" position="0 0.3 0.1"></a-text>
           <% doctorContacts.forEach(function(contact, index) { %>
-            <a-text value="<%= contact.name %>: <%= contact.number %>" color="#0056b3" align="center" position="0 <%= -0.1 - index * 2 %> 0.1"></a-text>
+            <a-text value="<%= contact.name %>: <%= contact.number %>" color="#0056b3" align="center" position="0 <%= -0.1 - (index * 0.25) %> 0.1"></a-text>
           <% }); %>
         </a-entity>
       </a-entity>
