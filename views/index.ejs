@@ -14,6 +14,27 @@
         color: #ffffff;
       }
 
+      .text-box {
+        background-color: #ffffff;
+        border-radius: 15px;
+        padding: 10px;
+        color: #333;
+        font-size: 32px;
+        line-height: 1.2;
+        width: 2.5;
+        text-align: center;
+        opacity: 0.8;
+      }
+
+      .text-title {
+        font-weight: bold;
+        color: #ff0000;
+      }
+
+      .contact-info {
+        font-size: 30px;
+        color: #0056b3;
+      }
   </style>
 </head>
 <body>
@@ -24,37 +45,62 @@
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
     
     <a-entity mindar-image-target="targetIndex: 0" position="0 0 0">
-      <a-image src="<%= profileImage %>" position="0 0.3 0.02" width="0.2" height="0.2"></a-image>
+      
+      <a-image src="<%= profileImage %>" position="0 1.5 0" width="1.5" height="1.5"></a-image>
         
-     <!-- Allergies -->
-     <a-plane position="-0.35 0.35 0.01" width="0.4" height="0.2" color="#d3d3d3">
-      <a-text value="Allergies" position="0 0.075 0.01" align="center" color="red" ></a-text>
-      <a-text value="<%= allergies.join('\n') %>" position="0 -0.025 0.01" align="center" ></a-text>
-  </a-plane>
-  
-  <!-- High Risk -->
-  <a-plane position="0.35 0.35 0.01" width="0.4" height="0.4" color="#d3d3d3">
-      <a-text value="High Risk" position="0 0.175 0.01" align="center" color="red" ></a-text>
-      <a-text value="Conditions:\n<%= harmfulMedicalConditions.join('\n') %>" position="0 0.05 0.01" align="center" ></a-text>
-      <a-text value="Medications:\n<%= harmfulMedications.join('\n') %>" position="0 -0.1 0.01" align="center" ></a-text>
-  </a-plane>
-  
-  <!-- Patient Info -->
-  <a-plane position="0 0 0.01" width="0.4" height="0.15" color="#add8e6">
-      <a-text value="<%= legalName %>\n<%= age %>\nBlood Type: s<%= bloodType %>" position="0 0 0.01" align="center" ></a-text>
-  </a-plane>
-  
-  <!-- Emergency Contact -->
-  <a-plane position="-0.35 -0.35 0.01" width="0.4" height="0.2" color="#d3d3d3">
-      <a-text value="Emergency Contact" position="0 0.075 0.01" align="center" ></a-text>
-      <a-text value="<% emergencyContacts.forEach(function(contact) { %><%= contact.name %>\n<%= contact.number %>\n<% }); %>" position="0 -0.05 0.01" align="center" scale="0.05 0.05 0.05"></a-text>
-  </a-plane>
-  
-  <!-- Doctors Contact -->
-  <a-plane position="0.35 -0.35 0.01" width="0.4" height="0.2" color="#d3d3d3">
-      <a-text value="Doctors Contact" position="0 0.075 0.01" align="center" ></a-text>
-      <a-text value="<% doctorContacts.forEach(function(contact) { %><%= contact.name %>\n<%= contact.number %>\n<% }); %>" position="0 -0.05 0.01" align="center" scale="0.05 0.05 0.05"></a-text>
-  </a-plane>
+      <a-entity position="0 0 0">
+        <a-plane width="1.5" height="1" color="#ffffff"></a-plane>
+        <a-entity class="text-box" position="0 0 0">
+          <a-text value="<%= legalName %>" color="#333" align="center" position="0 0.25 0.1"></a-text>
+          <a-text value="Age: <%= age %>" color="#333" align="center" position="0 0 0.1"></a-text>
+          <a-text value="Blood Type: <%= bloodType %>" color="#ff0000" align="center" position="0 -0.25 0.1"></a-text>
+        </a-entity>
+      </a-entity>
+
+      <a-entity position="-2 -2.5 0">
+        <a-plane width="1.5" height="1" color="#ffffff"></a-plane>
+          <a-entity class="text-box">
+            <a-text value="Allergies" color="#ff0000" align="center" position="0 0.5 0.1"></a-text>
+            <% allergies.forEach(function(allergy, index) { %>
+              <a-text value="<%= allergy.name %>" color="#333" align="center" position="0 <%= -0.5 - index * 0.35 %> 0.1"></a-text>
+              <% }); %>
+            </a-entity>
+      </a-entity>
+
+      <a-entity position="-2.5 0 0">
+        <a-plane width="1.5" height="1" color="#ffffff"></a-plane>
+        <a-entity class="text-box">
+          <a-text value="High Risk" color="#ff0000" align="center" position="0 0.5 0"></a-text>
+          <a-text value="Conditions" color="#333" align="center" position="0 0 0"></a-text>
+          <% harmfulMedicalConditions.forEach(function(condition, index) { %>
+            <a-text value="<%= condition.name %>" color="#333" align="center" position="0 <%= -0.3 - index * 0.35 %> 0.1"></a-text>
+          <% }); %>
+          <a-text value="Medications" color="#333" align="center" position="0 <%= -0.3 - harmfulMedicalConditions.length * 0.35 %> 0.1"></a-text>
+          <% harmfulMedications.forEach(function(medication, index) { %>
+            <a-text value="<%= medication.name %>" color="#333" align="center" position="0 <%= -0.6 - (index + harmfulMedicalConditions.length) * 0.35 %> 0.1"></a-text>
+          <% }); %>
+        </a-entity>
+      </a-entity>
+
+      <a-entity position="2 -2.5 0">
+        <a-plane width="1.5" height="1" color="#ffffff"></a-plane>
+        <a-entity class="text-box">
+          <a-text value="Emergency Contacts" color="#ff0000" align="center" position="0 0.5 0.1"></a-text>
+          <% emergencyContacts.forEach(function(contact, index) { %>
+            <a-text value="<%= contact.name %>: <%= contact.number %>" color="#0056b3" align="center" position="0 <%= -0.3 - index * 0.35 %> 0.1"></a-text>
+          <% }); %>
+        </a-entity>
+      </a-entity>
+
+      <a-entity position="2 0 0">
+        <a-plane width="1.5" height="1" color="#ffffff"></a-plane>
+        <a-entity class="text-box">
+          <a-text value="Doctor Contacts" color="#ff0000" align="center" position="0 0.5 0.1"></a-text>
+          <% doctorContacts.forEach(function(contact, index) { %>
+            <a-text value="<%= contact.name %>: <%= contact.number %>" color="#0056b3" align="center" position="0 <%= -0.3 - index * 0.35 %> 0.1"></a-text>
+          <% }); %>
+        </a-entity>
+      </a-entity>
     </a-entity>
   </a-scene>
 
@@ -67,4 +113,5 @@
   </script>
 </body>
 </html>
+
 
