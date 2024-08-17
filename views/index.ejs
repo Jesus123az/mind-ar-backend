@@ -36,7 +36,7 @@
       <a-image src="<%= profileImage %>" position="0 1.5 0" width="1.5" height="1.5"></a-image>
         
       <a-entity position="0 0 0">
-        <a-plane width="<%= Math.max(1.8, legalName.length * 0.11) %>" height="1" color="#ffffff"></a-plane>
+        <a-plane width="<%= Math.max(1.8, legalName.length * 0.14) %>" height="1" color="#ffffff"></a-plane>
         <a-entity class="text-box" position="0 0 0">
           <a-text value="<%= legalName %>" color="#333" align="center" position="0 0.25 0.1"></a-text>
           <a-text value="Age: <%= age %>" color="#333" align="center" position="0 0 0.1"></a-text>
@@ -69,7 +69,7 @@
         </a-entity>
       </a-entity>
 
-      <a-entity position="2.7 -2.5 0">
+      <a-entity position="2.9 -2.5 0">
         <a-plane width="3" height="<%= emergencyContacts.length%>" color="#ffffff"></a-plane>
         <a-entity class="text-box">
           <a-text value="Emergency Contacts" color="#ff0000" align="center" position="0 0.3 0.1"></a-text>
@@ -81,7 +81,7 @@
         </a-entity>
       </a-entity>
 
-      <a-entity position="2.7 0 0">
+      <a-entity position="2.9 0 0">
         <a-plane width="3" height="<%= doctorContacts.length %>" color="#ffffff"></a-plane>
         <a-entity class="text-box">
           <a-text value="Doctor Contacts" color="#ff0000" align="center" position="0 0.3 0.1"></a-text>
