@@ -5,23 +5,14 @@
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   <style>
-     .loading {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 24px;
-        color: #ffffff;
-      }
-      .text-title {
-        font-weight: bold;
-        color: #ff0000;
-      }
-
-      .contact-info {
-        font-size: 30px;
-        color: #0056b3;
-      }
+    .loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+      color: #ffffff;
+    }
   </style>
 </head>
 <body>
@@ -29,69 +20,69 @@
 
   <a-scene id="scene" mindar-image="imageTargetSrc: /<%= userId %>.mind" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
     
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <a-camera position="0 0 3" look-controls="enabled: false"></a-camera>
     
     <a-entity mindar-image-target="targetIndex: 0" position="0 0 0">
       
-      <a-image src="<%= profileImage %>" position="0 1.5 0" width="1.5" height="1.5"></a-image>
+      <a-image src="<%= profileImage %>" position="0 1.5 0" width="1" height="1" scale="0.5 0.5 0.5"></a-image>
         
-      <a-entity position="0 0 0">
-        <a-plane width="<%= Math.max(1.8, legalName.length * 1.1) %>" height="1" color="#ffffff"></a-plane>
-        <a-entity class="text-box" position="0 0 0">
-          <a-text value="<%= legalName %>" color="#333" align="center" position="0 0.25 0.1"></a-text>
-          <a-text value="Age: <%= age %>" color="#333" align="center" position="0 0 0.1"></a-text>
-          <a-text value="Blood Type: <%= bloodType %>" color="#ff0000" align="center" position="0 -0.25 0.1"></a-text>
+      <a-entity position="0 -1 0">
+        <a-plane width="<%= Math.max(0.9, legalName.length * 0.055) %>" height="0.5" color="#ffffff"></a-plane>
+        <a-entity position="0 0 0">
+          <a-text value="<%= legalName %>" color="#333" align="center" position="0 0.2 0.05" scale="0.5 0.5 0.5" width="4"></a-text>
+          <a-text value="Age: <%= age %>" color="#333" align="center" position="0 0 0.05" scale="0.5 0.5 0.5" width="4"></a-text>
+          <a-text value="Blood Type: <%= bloodType %>" color="#ff0000" align="center" position="0 -0.2 0.05" scale="0.5 0.5 0.5" width="4"></a-text>
         </a-entity>
       </a-entity>
 
-      <a-entity position="-2 -2.5 0">
-        <a-plane width="1.5" height="<%= 0.5 + allergies.length %>" color="#ffffff"></a-plane>
-          <a-entity class="text-box">
-            <a-text value="Allergies" color="#ff0000" align="center" position="0 0.5 0.1"></a-text>
-            <% allergies.forEach(function(allergy, index) { %>
-              <a-text value="<%= allergy.name %>" color="#333" align="center" position="0 <%= -0.25 - index * 0.25 %> 0.1"></a-text>
-              <% }); %>
-            </a-entity>
+      <a-entity position="-2 -1.5 0">
+        <a-plane width="1" height="<%= 0.25 + allergies.length * 0.125 %>" color="#ffffff"></a-plane>
+        <a-entity position="0 0 0">
+          <a-text value="Allergies" color="#ff0000" align="center" position="0 0.2 0.05" scale="0.5 0.5 0.5" width="4" weight="bold"></a-text>
+          <% allergies.forEach(function(allergy, index) { %>
+            <a-text value="<%= allergy.name %>" color="#333" align="center" position="0 <%= -0.125 - index * 0.125 %> 0.05" scale="0.5 0.5 0.5" width="4"></a-text>
+          <% }); %>
+        </a-entity>
       </a-entity>
 
-      <a-entity position="-2.5 0 0">
-        <a-plane width="2" height="<%= harmfulMedicalConditions.length + harmfulMedications.length + 0.5%>" color="#ffffff"></a-plane>
-        <a-entity class="text-box">
-          <a-text value="High Risk" color="#ff0000" align="center" position="0 0.3 0"></a-text>
-          <a-text value="Conditions" color="#333" align="center" position="0 0 0"></a-text>
+      <a-entity position="-2 1 0">
+        <a-plane width="2" height="<%= harmfulMedicalConditions.length + harmfulMedications.length * 0.25 + 0.5 %>" color="#ffffff"></a-plane>
+        <a-entity position="0 0 0">
+          <a-text value="High Risk Conditions" color="#ff0000" align="center" position="0 0.3 0" scale="0.5 0.5 0.5" width="4" weight="bold"></a-text>
           <% harmfulMedicalConditions.forEach(function(condition, index) { %>
-            <a-text value="<%= condition.name %>" color="#333" align="center" position="0 <%= -0.25 - index * 0.25 %> 0.1"></a-text>
+            <a-text value="<%= condition.name %>" color="#333" align="center" position="0 <%= -0.125 - index * 0.125 %> 0.05" scale="0.5 0.5 0.5" width="4"></a-text>
           <% }); %>
-          <a-text value="Medications" color="#333" align="center" position="0 <%= -0.5 - (harmfulMedicalConditions.length * 0.25) %> 0.1"></a-text>
+          <a-text value="Medications" color="#333" align="center" position="0 <%= -0.25 - (harmfulMedicalConditions.length * 0.125) %> 0.05" scale="0.5 0.5 0.5" width="4" weight="bold"></a-text>
           <% harmfulMedications.forEach(function(medication, index) { %>
-            <a-text value="<%= medication.name %>" color="#333" align="center" position="0 <%= -0.75 - (harmfulMedicalConditions.length * 0.25) - (index * 0.25)  %> 0.1"></a-text>
+            <a-text value="<%= medication.name %>" color="#333" align="center" position="0 <%= -0.375 - (harmfulMedicalConditions.length * 0.125) - (index * 0.125) %> 0.05" scale="0.5 0.5 0.5" width="4"></a-text>
           <% }); %>
         </a-entity>
       </a-entity>
 
-      <a-entity position="2.7 -2.5 0">
-        <a-plane width="3" height="<%= emergencyContacts.length%>" color="#ffffff"></a-plane>
-        <a-entity class="text-box">
-          <a-text value="Emergency Contacts" color="#ff0000" align="center" position="0 0.3 0.1"></a-text>
+      <a-entity position="2 -1.5 0">
+        <a-plane width="2" height="<%= emergencyContacts.length * 0.25 %>" color="#ffffff"></a-plane>
+        <a-entity position="0 0 0">
+          <a-text value="Emergency Contacts" color="#ff0000" align="center" position="0 0.3 0.05" scale="0.5 0.5 0.5" width="4" weight="bold"></a-text>
           <% emergencyContacts.forEach(function(contact, index) { %>
-             <a-entity link = "href: tel:<%= contact.number %>" class="text-box">
-            <a-text value="<%= contact.name %>: <%= contact.number %>" color="#0056b3" align="center" position="0 <%= -0.1 - (index * 0.25) %> 0.1"></a-text>
+            <a-entity link="href: tel:<%= contact.number %>" class="text-box">
+              <a-text value="<%= contact.name %>: <%= contact.number %>" color="#0056b3" align="center" position="0 <%= -0.05 - (index * 0.125) %> 0.05" scale="0.5 0.5 0.5" width="4"></a-text>
             </a-entity>
           <% }); %>
         </a-entity>
       </a-entity>
 
-      <a-entity position="2.7 0 0">
-        <a-plane width="3" height="<%= doctorContacts.length %>" color="#ffffff"></a-plane>
-        <a-entity class="text-box">
-          <a-text value="Doctor Contacts" color="#ff0000" align="center" position="0 0.3 0.1"></a-text>
+      <a-entity position="2 1 0">
+        <a-plane width="2" height="<%= doctorContacts.length * 0.25 %>" color="#ffffff"></a-plane>
+        <a-entity position="0 0 0">
+          <a-text value="Doctor Contacts" color="#ff0000" align="center" position="0 0.3 0.05" scale="0.5 0.5 0.5" width="4" weight="bold"></a-text>
           <% doctorContacts.forEach(function(contact, index) { %>
-            <a-entity link = "href: tel:<%= contact.number %>" class="text-box">
-            <a-text value="<%= contact.name %>: <%= contact.number %>" color="#0056b3" align="center" position="0 <%= -0.1 - (index * 0.25) %> 0.1"></a-text>
+            <a-entity link="href: tel:<%= contact.number %>" class="text-box">
+              <a-text value="<%= contact.name %>: <%= contact.number %>" color="#0056b3" align="center" position="0 <%= -0.05 - (index * 0.125) %> 0.05" scale="0.5 0.5 0.5" width="4"></a-text>
             </a-entity>
           <% }); %>
         </a-entity>
       </a-entity>
+
     </a-entity>
   </a-scene>
 
@@ -104,5 +95,3 @@
   </script>
 </body>
 </html>
-
-
